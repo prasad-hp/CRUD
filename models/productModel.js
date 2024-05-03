@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const productSchema = mongoose.Schema({
         name: {
-            type: Number,
+            type: String,
             required: [true, "Please enter the Product Name"]
         },
         quantity: {
@@ -22,10 +22,10 @@ const productSchema = mongoose.Schema({
         },
     }, 
     {
-        Timestamp: true
+        timestamps: true
     }
 )
 
 const Product = mongoose.model("Product", productSchema)
 
-module.exports = Product;
+export default Product;

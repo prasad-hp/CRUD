@@ -1,5 +1,6 @@
 import express from "express"
 import mongoose from "mongoose";
+import Product from "./models/productModel.js"
 
 const app = express()
 const port = 3000;
@@ -15,11 +16,24 @@ mongoose.connect('mongodb://localhost:27017/CRUD')
     })
 })
 
-app.get("/", (req, res)=>{
-    res.send("Hello World")
+app.get("/api/products", async(req, res)=>{
+    try{
+      const products = await Product.find({})
+      res.status(200).json(products)
+    } catch (error) {
+      res.status(500).json({message:error.message})
+    }
 })
 
-app.post("/api/products", (req, res) =>{
-  console.log(req.body)
-  res.send(req.body)
+app.post("/api/products", async(req, res) =>{
+    try {
+      // const product = await new Product(req.body)
+      // product.save().then(()=> console.log("Saved"))
+
+      const product = await Product.create(req.body)
+      res.status(200).json(product)
+      
+    } catch (error) {
+      res.status(500).json({message: error.message})
+    }
 })
